@@ -2,6 +2,7 @@ package termdim
 
 import (
 	"os/exec"
+	"runtime"
 	"testing"
 
 	"github.com/creack/pty"
@@ -13,7 +14,13 @@ const (
 )
 
 func TestGetSize(t *testing.T) {
-	cmd := exec.Command("dir")
+	var command string
+	if runtime.GOOS == "windows" {
+		command = "dir"
+	} else {
+		command = "ls"
+	}
+	cmd := exec.Command(command)
 	pty, err := pty.StartWithSize(cmd, &pty.Winsize{
 		Rows: expectedHeight,
 		Cols: expectedWidth,
