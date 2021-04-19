@@ -1,11 +1,15 @@
-# go-vscode
+# termdim
 
-This is a template repository for go development.
+Retrieves terminal dimensions.
 
 ## Usage
-1. Click `Use this template` button.
-2. Replace `go-vscode` with your project name in files listed below:
-  - go.mod
-  - .vscode/launch.json
+```go
+import (
+  "github.com/ghokun/termdim"
+)
 
+func MyFunc() {
+  width, height, err := termdim.GetSize(int(os.Stdout.Fd()))
+}
+```
 
