@@ -5,11 +5,11 @@ package termdim
 import (
 	"testing"
 
-	"github.com/creack/pty"
+	"github.com/mattn/go-tty"
 )
 
 func TestGetSizeWindows(t *testing.T) {
-	_, tty, err := pty.Open()
+	tty, err := tty.Open()
 	if err != nil {
 		t.Fatal(err)
 	}

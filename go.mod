@@ -4,5 +4,6 @@ go 1.16
 
 require (
 	github.com/creack/pty v1.1.11
+	github.com/mattn/go-tty v0.0.3 // indirect
 	golang.org/x/sys v0.0.0-20210415045647-66c3f260301c
 )
