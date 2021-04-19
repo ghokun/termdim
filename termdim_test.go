@@ -1,22 +1,36 @@
 package termdim
 
 import (
-	"fmt"
+	"os/exec"
 	"testing"
 
-	"github.com/mattn/go-tty"
+	"github.com/creack/pty"
+)
+
+const (
+	expectedWidth  = 100
+	expectedHeight = 50
 )
 
 func TestGetSize(t *testing.T) {
-	tty, err := tty.Open()
+	cmd := exec.Command("dir")
+	pty, err := pty.StartWithSize(cmd, &pty.Winsize{
+		Rows: expectedHeight,
+		Cols: expectedWidth,
+		X:    0,
+		Y:    0,
+	})
 	if err != nil {
 		t.Fatal(err)
 	}
-	tty.Output().Fd()
-	width, height, err := GetSize(int(tty.Output().Fd()))
+	width, height, err := GetSize(int(pty.Fd()))
 	if err != nil {
 		t.Fatal(err)
 	}
-	fmt.Println(width)
-	fmt.Println(height)
+	if width != expectedWidth {
+		t.Fatalf("%d != %d", width, expectedWidth)
+	}
+	if height != expectedHeight {
+		t.Fatalf("%d != %d", height, expectedHeight)
+	}
 }
