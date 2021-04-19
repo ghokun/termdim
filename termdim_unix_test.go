@@ -11,16 +11,18 @@ import (
 
 func TestGetSizeUnix(t *testing.T) {
 	cmd := exec.Command("ls")
-	pty, err := pty.StartWithSize(cmd, &pty.Winsize{
+	ptyx, err := pty.StartWithSize(cmd, &pty.Winsize{
 		Rows: 50,
 		Cols: 100,
 		X:    0,
 		Y:    0,
 	})
+	defer func() { _ = ptyx.Close() }()
+	
 	if err != nil {
 		t.Fatal(err)
 	}
-	width, height, err := GetSize(int(pty.Fd()))
+	width, height, err := GetSize(int(ptyx.Fd()))
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -9,15 +9,17 @@ import (
 )
 
 func TestGetSizeWindows(t *testing.T) {
-	tty, err := tty.Open()
-	if err != nil {
-		t.Fatal(err)
-	}
 	winsize := <-tty.SIGWINCH()
 	expectedWidth := winsize.W
 	expectedHeight := winsize.H
 
-	width, height, err := GetSize(int(tty.Output().Fd()))
+	ttyx, err := tty.Open()
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer ttyx.Close()
+
+	width, height, err := GetSize(int(ttyx.Output().Fd()))
 	if err != nil {
 		t.Fatal(err)
 	}
