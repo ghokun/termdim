@@ -27,7 +27,9 @@ func TestGetSizeUnix(t *testing.T) {
 	if width != 100 {
 		t.Fatalf("%d != %d", width, 100)
 	}
+	t.Logf("Terminal width: %d", width)
 	if height != 50 {
 		t.Fatalf("%d != %d", height, 50)
 	}
+	t.Logf("Terminal height: %d", height)
 }

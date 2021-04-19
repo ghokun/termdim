@@ -17,4 +17,6 @@ func TestGetSizeWindows(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	t.Logf("Terminal width: %d", width)
+	t.Logf("Terminal height: %d", height)
 }
